@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>nylon-checked-group demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../nylon-checked-group.html">
+
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../../polymer/lib/elements/dom-repeat.html">
+  <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
+  <link rel="import" href="../../paper-checkbox/paper-checkbox.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </custom-style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic nylon-checked-group demo</h3>
+    <demo-snippet>
+      <template>
+        <dom-bind>
+          <template>
+            [[selected]]
+            <nylon-checked-group id="checkboxgroup" value="{{selected}}" items-bind="{{itemsBind}}"></nylon-checked-group>
+            <template is="dom-repeat" items="{{itemsBind}}">
+              <div>
+                <paper-checkbox checked="{{item.checked}}">[[item.label]]</paper-checkbox>
+              </div>
+            </template>
+          </template>
+        </dom-bind>
+
+        <button id="btn">add item</button>
+        <script>
+          document.getElementById('btn').addEventListener('click', function () {
+            document.getElementById('checkboxgroup').items = [
+              { label: 'zero', value: 0 },
+              { label: 'one', value: 1 }
+            ]
+          })
+
+        </script>
+
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+
+</html>

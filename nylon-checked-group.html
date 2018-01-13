@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="nylon-checked-group">
+  <script>
+    /**
+     * `nylon-checked-group`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class NylonCheckedGroup extends Polymer.Element {
+      static get is() {
+        return 'nylon-checked-group'
+      }
+
+      static get properties() {
+        return {
+          items: {
+            type: Array,
+            value: [],
+            observer: '_itemsOrValueChanged'
+          },
+          itemsBind: {
+            type: Array,
+            notify: true
+          },
+          value: {
+            type: Array,
+            value: [],
+            observer: '_itemsOrValueChanged',
+            notify: true
+          }
+        }
+      }
+
+      static get observers() {
+        return ['_itemsBindChanged(itemsBind.*)']
+      }
+
+      _itemsOrValueChanged() {
+        if ((this.value.length > 0) && (this.items.length > 0)) {
+          this._checkedItem()
+        } else {
+          this.itemsBind = JSON.parse(JSON.stringify(this.items))
+        }
+
+      }
+
+      _checkedItem() {
+        this.itemsBind = JSON.parse(JSON.stringify(this.itemsBind.map((row) => {
+          row.checked = this.value.indexOf(row.value) != -1
+          return row
+        })))
+      }
+
+      _itemsBindChanged(ob) {
+        if (ob.path != 'itemsBind') {
+          this.value = ob.base.filter((row) => {
+            return row.checked
+          }).map((row) => {
+            return row.value
+          })
+
+        }
+      }
+    }
+
+    window.customElements.define(NylonCheckedGroup.is, NylonCheckedGroup);
+  </script>
+</dom-module>
