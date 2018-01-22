@@ -38,14 +38,19 @@
       static get observers() {
         return ['_itemsBindChanged(itemsBind.*)']
       }
-
+      
       _itemsOrValueChanged() {
-        if ((this.value.length > 0) && (this.items.length > 0)) {
-          this._checkedItem()
-        } else {
-          this.itemsBind = JSON.parse(JSON.stringify(this.items))
+        this.itemsBind = JSON.parse(JSON.stringify(this.items))
+        if(!this.value){
+          this.value = []
+        }
+        if(!this.items){
+          this.items = []
         }
 
+        if ((this.value.length > 0) && (this.items.length > 0)) {
+          this._checkedItem()
+        }
       }
 
       _checkedItem() {
